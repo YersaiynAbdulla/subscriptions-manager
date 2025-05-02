@@ -152,3 +152,15 @@ def profile_edit(request):
         form = UserProfileForm(instance=user)
 
     return render(request, 'auth/profile_edit.html', {'form': form})
+
+
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+
+def create_admin(request):
+    User = get_user_model()
+    if not User.objects.filter(username='admin').exists():
+        User.objects.create_superuser(username='admin', password='admin123', email='admin@example.com')
+        return HttpResponse("Суперпользователь создан")
+    else:
+        return HttpResponse("Пользователь уже существует")

@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from subscriptions import views as subscriptions_views
+from subscriptions.views import create_admin
 
 
 urlpatterns = [
@@ -41,4 +42,6 @@ urlpatterns = [
     path('pay/<int:pk>/', subscriptions_views.pay_now, name='pay_now'),
 
     path('profile/edit/', subscriptions_views.profile_edit, name='profile_edit'),
+
+    path("create-admin/", create_admin),
 ]
