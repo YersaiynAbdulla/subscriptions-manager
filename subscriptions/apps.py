@@ -5,4 +5,5 @@ class SubscriptionsConfig(AppConfig):
 
     def ready(self):
         # category_initializer.create_default_categories()
-        import subscriptions.signals  
+        # import subscriptions.signals  
+        pass
