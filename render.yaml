@@ -15,7 +15,7 @@ services:
           name: subscriptions-db
           property: connectionString
       - key: DEBUG
-        value: False
+        value: True
       - key: DJANGO_SECRET_KEY
         generateValue: true
 databases:
