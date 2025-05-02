@@ -64,20 +64,12 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/subscriptions/"
 
 # База данных (PostgreSQL на Render, SQLite локально)
-if os.getenv("DATABASE_URL"):
-    DATABASES = {
-        "default": dj_database_url.config(
-            conn_max_age=600,
-            ssl_require=not DEBUG
-        )
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
+DATABASES = {
+    'default': dj_database_url.config(
+        conn_max_age=600,
+        ssl_require=False
+    )
+}
 
 # Валидация паролей
 AUTH_PASSWORD_VALIDATORS = [
