@@ -10,7 +10,8 @@ SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "unsafe-dev-key")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
 # ALLOWED_HOSTS: через запятую в ENV или * для разработки
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
+ALLOWED_HOSTS = ["subscriptions-manager.onrender.com", "localhost", "127.0.0.1"]
+
 
 # Установленные приложения
 INSTALLED_APPS = [
