@@ -1,24 +1,23 @@
-# Python
+# Python cache
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+*.py[cod]
 
-# Virtual env
+# Virtual environments
 venv/
 env/
-
-# Editor configs
-.vscode/
-.idea/
 
 # macOS
 .DS_Store
 
+# Editor
+.vscode/
+.idea/
+
 # Django
 db.sqlite3
 *.sqlite3
+*.log
+*.pot
+*.pyc
 .env
-
-# Static & media (если они генерируются на сервере)
 media/
