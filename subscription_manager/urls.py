@@ -18,7 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from subscriptions import views as subscriptions_views
-from subscriptions.views import create_admin
+
+from subscriptions.views import create_admin, run_migrations
 
 
 urlpatterns = [
@@ -43,5 +44,8 @@ urlpatterns = [
 
     path('profile/edit/', subscriptions_views.profile_edit, name='profile_edit'),
 
+
     path("create-admin/", create_admin),
+
+    path("run-migrations/", run_migrations),
 ]

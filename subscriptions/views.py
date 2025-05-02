@@ -158,6 +158,13 @@ from django.contrib.auth import get_user_model
 from django.http import HttpResponse
 from django.db import OperationalError
 
+
+
+
+from django.contrib.auth import get_user_model
+from django.http import HttpResponse
+from django.db import OperationalError
+
 def create_admin(request):
     try:
         User = get_user_model()
@@ -175,3 +182,13 @@ def create_admin(request):
     except Exception as e:
         return HttpResponse(f"❌ Ошибка: {str(e)}")
 
+
+
+from django.core.management import call_command
+
+def run_migrations(request):
+    try:
+        call_command("migrate")
+        return HttpResponse("✅ Миграции успешно применены!")
+    except Exception as e:
+        return HttpResponse(f"❌ Ошибка при миграции: {str(e)}")
