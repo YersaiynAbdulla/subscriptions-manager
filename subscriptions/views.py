@@ -184,11 +184,14 @@ def create_admin(request):
 
 
 
+from django.http import HttpResponse
 from django.core.management import call_command
+from io import StringIO
 
 def run_migrations(request):
     try:
-        call_command("migrate")
-        return HttpResponse("✅ Миграции успешно применены!")
+        out = StringIO()
+        call_command("migrate", stdout=out)
+        return HttpResponse("<pre>" + out.getvalue() + "</pre>")
     except Exception as e:
-        return HttpResponse(f"❌ Ошибка при миграции: {str(e)}")
+        return HttpResponse(f"<b>❌ Ошибка при миграции:</b><br><pre>{str(e)}</pre>")
