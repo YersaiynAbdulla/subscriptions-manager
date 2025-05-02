@@ -152,17 +152,3 @@ def profile_edit(request):
         form = UserProfileForm(instance=user)
 
     return render(request, 'auth/profile_edit.html', {'form': form})
-
-
-
-
-
-
-
-from django.core.management import call_command
-from django.http import HttpResponse
-
-def init_setup(request):
-    call_command('migrate')
-    call_command('collectstatic', '--noinput')
-    return HttpResponse("✅ Migrations and static files collected")

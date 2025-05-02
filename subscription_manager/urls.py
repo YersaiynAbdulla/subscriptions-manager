@@ -41,7 +41,4 @@ urlpatterns = [
     path('pay/<int:pk>/', subscriptions_views.pay_now, name='pay_now'),
 
     path('profile/edit/', subscriptions_views.profile_edit, name='profile_edit'),
-
-    path('init/', subscriptions_views.init_setup),
-
 ]
