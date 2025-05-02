@@ -1,9 +1,8 @@
 from django.apps import AppConfig
 
 class SubscriptionsConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
     name = 'subscriptions'
 
     def ready(self):
-        from . import category_initializer
-        category_initializer.create_default_categories()
+        # category_initializer.create_default_categories()
+        import subscriptions.signals  
