@@ -1,9 +1,14 @@
 from django.apps import AppConfig
+from django.db.utils import OperationalError, ProgrammingError
 
 class SubscriptionsConfig(AppConfig):
-    name = 'subscriptions'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "subscriptions"
 
     def ready(self):
-        # category_initializer.create_default_categories()
-        # import subscriptions.signals  
-        pass
+        try:
+            from . import category_initializer
+            category_initializer.create_default_categories()
+        except (OperationalError, ProgrammingError):
+            # Таблицы ещё не созданы — безопасно пропустить
+            pass

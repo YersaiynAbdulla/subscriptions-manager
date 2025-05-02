@@ -5,9 +5,9 @@ services:
     plan: free
     buildCommand: |
       pip install -r requirements.txt
-    startCommand: |
       python manage.py migrate --noinput
       python manage.py collectstatic --noinput
+    startCommand: |
       gunicorn subscription_manager.wsgi
     envVars:
       - key: DATABASE_URL
