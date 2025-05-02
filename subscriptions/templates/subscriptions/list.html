@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2 class="mb-4">Мои подписки</h2>
+
+<a href="{% url 'subscription_add' %}" class="btn btn-success mb-3">+ Добавить подписку</a>
+
+{% if subscriptions %}
+  <table class="table table-striped table-bordered shadow-sm">
+    <thead class="table-primary">
+      <tr>
+        <th>Название</th>
+        <th>Категория</th>
+        <th>Цена</th>
+        <th>Период</th>
+        <th>Следующая оплата</th>
+        <th>Активна</th>
+        <th>Действия</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in subscriptions %}
+        <tr>
+          <td>{{ s.name }}</td>
+          <td>{{ s.category.name }}</td>
+          <td>{{ s.price }} ₸</td>
+          <td>{{ s.billing_period }}</td>
+          <td>{{ s.next_payment_date }}</td>
+          <td>
+            {% if s.is_active %}
+              ✅
+            {% else %}
+              ❌
+            {% endif %}
+          </td>
+          <td>
+            <a class="btn btn-sm btn-warning" href="{% url 'subscription_edit' s.pk %}">✏️</a>
+            <a class="btn btn-sm btn-danger" href="{% url 'subscription_delete' s.pk %}">🗑️</a>
+            <a class="btn btn-sm btn-success" href="{% url 'pay_now' s.pk %}">💸 Оплатить</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <div class="alert alert-info">У вас пока нет подписок. Нажмите “Добавить подписку” ⬆️</div>
+{% endif %}
+{% endblock %}

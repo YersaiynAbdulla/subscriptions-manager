@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="alert alert-warning p-4">
+  <h4>Вы уверены, что хотите удалить подписку "{{ subscription.name }}"?</h4>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Да, удалить</button>
+    <a class="btn btn-secondary" href="{% url 'subscription_list' %}">Отмена</a>
+  </form>
+</div>
+{% endblock %}

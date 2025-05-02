@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Профиль</h2>
+
+<ul class="list-group mb-4">
+  <li class="list-group-item"><strong>Логин:</strong> {{ user.username }}</li>
+  <li class="list-group-item"><strong>Email:</strong> {{ user.email }}</li>
+  <li class="list-group-item"><strong>Телефон:</strong> {{ user.phone_number }}</li>
+</ul>
+
+<h3>📊 Аналитика подписок</h3>
+<ul class="list-group">
+  <li class="list-group-item">Всего подписок: <strong>{{ total_subs }}</strong></li>
+  <li class="list-group-item">Активных подписок: <strong>{{ active_subs }}</strong></li>
+  <li class="list-group-item">Сумма подписок в месяц: <strong>{{ total_sum }} ₸</strong></li>
+  <li class="list-group-item">Потрачено в этом месяце: <strong>{{ monthly_spent }} ₸</strong></li>
+</ul>
+
+<h3 class="mt-5">🔔 Уведомления</h3>
+<ul class="list-group">
+  {% for note in notifications %}
+    <li class="list-group-item{% if not note.is_read %} list-group-item-warning{% endif %}">
+      {{ note.message }}
+      <small class="text-muted float-end">{{ note.created_at|date:"d.m.Y H:i" }}</small>
+    </li>
+  {% empty %}
+    <li class="list-group-item">Нет уведомлений</li>
+  {% endfor %}
+</ul>
+
+<div class="d-flex justify-content-start gap-3 mt-4">
+    <a class="btn btn-outline-primary" href="{% url 'profile_edit' %}">✏️ Редактировать профиль</a>
+    <a class="btn btn-outline-dark" href="{% url 'password_change' %}">🔑 Сменить пароль</a>
+</div>
+  
+{% endblock %}

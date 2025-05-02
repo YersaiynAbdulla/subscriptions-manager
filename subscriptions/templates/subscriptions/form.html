@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load form_filters %}
+
+{% block content %}
+<h2 class="mb-4">{{ title }}</h2>
+
+<form method="post" enctype="multipart/form-data" class="card p-4 shadow-sm bg-white">
+  {% csrf_token %}
+
+  {% for field in form %}
+    <div class="mb-3">
+      <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+
+      {% if field.field.widget.input_type == "checkbox" %}
+        <div class="form-check">
+          {{ field }}
+        </div>
+      {% elif field.field.widget.input_type == "number" %}
+        {{ field|add_class:"form-control" }}
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            const input = document.getElementById("{{ field.id_for_label }}");
+            if (input) input.setAttribute("inputmode", "numeric");
+          });
+        </script>
+      {% else %}
+        {{ field|add_class:"form-control" }}
+      {% endif %}
+
+      {% if field.help_text %}
+        <small class="form-text text-muted">{{ field.help_text }}</small>
+      {% endif %}
+
+      {% if field.errors %}
+        <div class="text-danger small">{{ field.errors }}</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+  <div class="d-flex justify-content-between mt-4">
+    <button type="submit" class="btn btn-primary">💾 Сохранить</button>
+    <a href="{% url 'subscription_list' %}" class="btn btn-secondary">⬅ Назад</a>
+  </div>
+</form>
+{% endblock %}
