@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual env
+venv/
+env/
+
+# Editor configs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# Django
+db.sqlite3
+*.sqlite3
+.env
+
+# Static & media (если они генерируются на сервере)
+media/
