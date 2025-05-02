@@ -156,11 +156,22 @@ def profile_edit(request):
 
 from django.contrib.auth import get_user_model
 from django.http import HttpResponse
+from django.db import OperationalError
 
 def create_admin(request):
-    User = get_user_model()
-    if not User.objects.filter(username='admin').exists():
-        User.objects.create_superuser(username='admin', password='admin123', email='admin@example.com')
-        return HttpResponse("Суперпользователь создан")
-    else:
-        return HttpResponse("Пользователь уже существует")
+    try:
+        User = get_user_model()
+        if not User.objects.filter(username='admin').exists():
+            User.objects.create_superuser(
+                username='admin',
+                password='admin123',
+                email='admin@example.com'
+            )
+            return HttpResponse("✅ Суперпользователь создан: admin / admin123")
+        else:
+            return HttpResponse("ℹ️ Пользователь 'admin' уже существует")
+    except OperationalError as e:
+        return HttpResponse(f"❌ Ошибка базы данных: {str(e)}")
+    except Exception as e:
+        return HttpResponse(f"❌ Ошибка: {str(e)}")
+
