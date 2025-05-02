@@ -1,9 +1,12 @@
-from django.urls import path
-from . import views
+from rest_framework.routers import DefaultRouter
+from django.urls import path, include
+from .api_views import SubscriptionViewSet, CategoryViewSet, UserViewSet
+
+router = DefaultRouter()
+router.register(r'subscriptions', SubscriptionViewSet, basename='subscription')
+router.register(r'categories', CategoryViewSet)
+router.register(r'users', UserViewSet)
 
 urlpatterns = [
-    path('', views.subscription_list, name='subscription_list'),
-    path('add/', views.subscription_add, name='subscription_add'),
-    path('edit/<int:pk>/', views.subscription_edit, name='subscription_edit'),
-    path('delete/<int:pk>/', views.subscription_delete, name='subscription_delete'),
+    path('api/', include(router.urls)),
 ]
