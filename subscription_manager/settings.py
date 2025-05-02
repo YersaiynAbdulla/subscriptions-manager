@@ -2,29 +2,28 @@ import os
 from pathlib import Path
 import dj_database_url
 
+# Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Безопасные значения из окружения
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "unsafe-dev-key")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# Разрешённые хосты (можно указать через ENV: ALLOWED_HOSTS=app.onrender.com,mydomain.com)
-ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "*").split(",")
+# ALLOWED_HOSTS: через запятую в ENV или * для разработки
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost").split(",")
 
-# Приложения
+# Установленные приложения
 INSTALLED_APPS = [
-    # стандартные
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # ваше
     "subscriptions",
 ]
 
+# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -38,6 +37,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "subscription_manager.urls"
 
+# Шаблоны
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -61,10 +61,21 @@ AUTH_USER_MODEL = "subscriptions.User"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/subscriptions/"
 
-# БД берём из переменной DATABASE_URL, выставленной Render при привязке Postgres
-DATABASES = {
-    "default": dj_database_url.config(conn_max_age=600)
-}
+# База данных (PostgreSQL на Render, SQLite локально)
+if os.getenv("DATABASE_URL"):
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            ssl_require=not DEBUG
+        )
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
 
 # Валидация паролей
 AUTH_PASSWORD_VALIDATORS = [
@@ -80,10 +91,10 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Статические файлы
+# Статика
 STATIC_URL = "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
-# Авто-поле по-умолчанию
+# Автоматическое поле ID
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
