@@ -63,13 +63,12 @@ AUTH_USER_MODEL = "subscriptions.User"
 LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/subscriptions/"
 
-# База данных (PostgreSQL на Render, SQLite локально)
 DATABASES = {
     'default': dj_database_url.config(
         conn_max_age=600,
         ssl_require=False
     )
-}
+}   
 
 # Валидация паролей
 AUTH_PASSWORD_VALIDATORS = [
