@@ -2,18 +2,14 @@ import os
 from pathlib import Path
 import dj_database_url
 
-# Базовая директория проекта
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Безопасные значения из окружения
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "unsafe-dev-key")
 DEBUG = os.getenv("DEBUG", "False") == "True"
 
-# ALLOWED_HOSTS: через запятую в ENV или * для разработки
 ALLOWED_HOSTS = ["subscriptions-manager.onrender.com", "localhost", "127.0.0.1"]
 
 
-# Установленные приложения
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,7 +21,6 @@ INSTALLED_APPS = [
     "rest_framework",
 ]
 
-# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
@@ -39,7 +34,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "subscription_manager.urls"
 
-# Шаблоны
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
