@@ -58,11 +58,8 @@ LOGIN_URL = "/login/"
 LOGIN_REDIRECT_URL = "/subscriptions/"
 
 DATABASES = {
-    'default': dj_database_url.config(
-        conn_max_age=600,
-        ssl_require=False
-    )
-}   
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+} 
 
 # Валидация паролей
 AUTH_PASSWORD_VALIDATORS = [
